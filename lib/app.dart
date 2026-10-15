@@ -103,7 +103,8 @@ class _HbookShellState extends State<HbookShell> {
 
   /// `GET /proxy/hotel8-pms/v1/properties` — the property registry, filtered
   /// to the app environment (PMS list route).
-  Future<List<Property>> _propertiesForEnv(BffClient client, String envId) async {
+  Future<List<Property>> _propertiesForEnv(
+      BffClient client, String envId) async {
     final json = await client.getRawJson('/proxy/hotel8-pms/v1/properties');
     final list = (json['items'] as List<dynamic>?) ?? const [];
     return list
@@ -194,6 +195,7 @@ class _HbookShellState extends State<HbookShell> {
     );
   }
 }
+
 /// The "Search" tab — a compact search form that pushes the search results
 /// page when the user taps "Search Availability".
 class _SearchTab extends StatefulWidget {
@@ -240,7 +242,8 @@ class _SearchTabState extends State<_SearchTab> {
     final today = DateTime.now();
     final first = isCheckIn
         ? today
-        : (_checkIn?.add(const Duration(days: 1)) ?? today.add(const Duration(days: 1)));
+        : (_checkIn?.add(const Duration(days: 1)) ??
+            today.add(const Duration(days: 1)));
     final date = await showDatePicker(
       context: context,
       initialDate: first,
@@ -251,7 +254,8 @@ class _SearchTabState extends State<_SearchTab> {
     setState(() {
       if (isCheckIn) {
         _checkIn = date;
-        if (_checkOut == null || _checkOut!.isBefore(date.add(const Duration(days: 1)))) {
+        if (_checkOut == null ||
+            _checkOut!.isBefore(date.add(const Duration(days: 1)))) {
           _checkOut = date.add(const Duration(days: 1));
         }
       } else {
@@ -263,7 +267,8 @@ class _SearchTabState extends State<_SearchTab> {
   void _search() {
     if (_checkIn == null || _checkOut == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select check-in and check-out dates.')),
+        const SnackBar(
+            content: Text('Please select check-in and check-out dates.')),
       );
       return;
     }
@@ -274,7 +279,8 @@ class _SearchTabState extends State<_SearchTab> {
       numberOfChildren: _children,
       numberOfRooms: _rooms,
       roomType: widget.metasearch?.roomTypeCode,
-      promoCode: _promoController.text.isEmpty ? null : _promoController.text.trim(),
+      promoCode:
+          _promoController.text.isEmpty ? null : _promoController.text.trim(),
     );
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -284,12 +290,14 @@ class _SearchTabState extends State<_SearchTab> {
           propertyName: widget.propertyName,
           request: request,
           promoCode: request.promoCode,
-          metasearch: _utm.isEmpty ? null : MetasearchContext(
-            utmSource: _utm['utm_source'],
-            utmMedium: _utm['utm_medium'],
-            utmCampaign: _utm['utm_campaign'],
-            utmContent: _utm['utm_content'],
-          ),
+          metasearch: _utm.isEmpty
+              ? null
+              : MetasearchContext(
+                  utmSource: _utm['utm_source'],
+                  utmMedium: _utm['utm_medium'],
+                  utmCampaign: _utm['utm_campaign'],
+                  utmContent: _utm['utm_content'],
+                ),
         ),
       ),
     );
@@ -335,7 +343,8 @@ class _SearchTabState extends State<_SearchTab> {
                     value: _adults,
                     decoration: const InputDecoration(labelText: 'Adults'),
                     items: List.generate(10, (i) => i + 1)
-                        .map((g) => DropdownMenuItem(value: g, child: Text('$g')))
+                        .map((g) =>
+                            DropdownMenuItem(value: g, child: Text('$g')))
                         .toList(),
                     onChanged: (v) => setState(() => _adults = v ?? 2),
                   ),
@@ -346,7 +355,8 @@ class _SearchTabState extends State<_SearchTab> {
                     value: _children,
                     decoration: const InputDecoration(labelText: 'Children'),
                     items: List.generate(10, (i) => i)
-                        .map((g) => DropdownMenuItem(value: g, child: Text('$g')))
+                        .map((g) =>
+                            DropdownMenuItem(value: g, child: Text('$g')))
                         .toList(),
                     onChanged: (v) => setState(() => _children = v ?? 0),
                   ),
@@ -357,7 +367,8 @@ class _SearchTabState extends State<_SearchTab> {
                     value: _rooms,
                     decoration: const InputDecoration(labelText: 'Rooms'),
                     items: List.generate(5, (i) => i + 1)
-                        .map((g) => DropdownMenuItem(value: g, child: Text('$g')))
+                        .map((g) =>
+                            DropdownMenuItem(value: g, child: Text('$g')))
                         .toList(),
                     onChanged: (v) => setState(() => _rooms = v ?? 1),
                   ),
@@ -445,14 +456,17 @@ class _ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.person_outline, size: 64, color: Theme.of(context).colorScheme.outline),
+            Icon(Icons.person_outline,
+                size: 64, color: Theme.of(context).colorScheme.outline),
             const SizedBox(height: 16),
             Text('Sign in for faster booking and loyalty rewards',
-                style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center),
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center),
             const SizedBox(height: 24),
             FilledButton(onPressed: () {}, child: const Text('Sign In')),
             const SizedBox(height: 12),
-            TextButton(onPressed: () {}, child: const Text('Create an account')),
+            TextButton(
+                onPressed: () {}, child: const Text('Create an account')),
           ],
         ),
       ),

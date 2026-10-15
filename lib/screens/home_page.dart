@@ -65,14 +65,16 @@ class _HomePageState extends State<HomePage> {
     if (date == null) return;
     setState(() {
       _checkIn = date;
-      if (_checkOut != null && _checkOut!.isBefore(date.add(const Duration(days: 1)))) {
+      if (_checkOut != null &&
+          _checkOut!.isBefore(date.add(const Duration(days: 1)))) {
         _checkOut = date.add(const Duration(days: 1));
       }
     });
   }
 
   Future<void> _pickCheckOut() async {
-    final first = _checkIn?.add(const Duration(days: 1)) ?? DateTime.now().add(const Duration(days: 1));
+    final first = _checkIn?.add(const Duration(days: 1)) ??
+        DateTime.now().add(const Duration(days: 1));
     final date = await showDatePicker(
       context: context,
       initialDate: first,
@@ -86,7 +88,8 @@ class _HomePageState extends State<HomePage> {
   void _doSearch() {
     if (_checkIn == null || _checkOut == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select check-in and check-out dates.')),
+        const SnackBar(
+            content: Text('Please select check-in and check-out dates.')),
       );
       return;
     }
@@ -96,7 +99,8 @@ class _HomePageState extends State<HomePage> {
       numberOfAdults: _adults,
       numberOfChildren: _children,
       numberOfRooms: _rooms,
-      promoCode: _promoController.text.isEmpty ? null : _promoController.text.trim(),
+      promoCode:
+          _promoController.text.isEmpty ? null : _promoController.text.trim(),
     );
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -118,7 +122,8 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     try {
-      final result = await widget.client.validatePromoCode(widget.propertyCode, code);
+      final result =
+          await widget.client.validatePromoCode(widget.propertyCode, code);
       setState(() => _promoResult = result);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -171,8 +176,10 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
               child: Text('Property Highlights',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
             ),
           ),
           SliverPadding(
@@ -195,8 +202,10 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
               child: Text('Featured Rooms',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
             ),
           ),
           SliverToBoxAdapter(
@@ -207,7 +216,8 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: _featuredRooms.length,
                 separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (context, i) => _FeaturedRoomCard(_featuredRooms[i]),
+                itemBuilder: (context, i) =>
+                    _FeaturedRoomCard(_featuredRooms[i]),
               ),
             ),
           ),
@@ -249,7 +259,10 @@ class _Hero extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.black.withValues(alpha: 0.2), Colors.black.withValues(alpha: 0.55)],
+              colors: [
+                Colors.black.withValues(alpha: 0.2),
+                Colors.black.withValues(alpha: 0.55)
+              ],
             ),
           ),
         ),
@@ -358,15 +371,30 @@ class _SearchBar extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _Counter(label: 'Adults', value: adults, min: 1, max: 10, onChanged: onAdults),
+                  child: _Counter(
+                      label: 'Adults',
+                      value: adults,
+                      min: 1,
+                      max: 10,
+                      onChanged: onAdults),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _Counter(label: 'Children', value: children, min: 0, max: 10, onChanged: onChildren),
+                  child: _Counter(
+                      label: 'Children',
+                      value: children,
+                      min: 0,
+                      max: 10,
+                      onChanged: onChildren),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _Counter(label: 'Rooms', value: rooms, min: 1, max: 5, onChanged: onRooms),
+                  child: _Counter(
+                      label: 'Rooms',
+                      value: rooms,
+                      min: 1,
+                      max: 5,
+                      onChanged: onRooms),
                 ),
               ],
             ),
@@ -407,7 +435,8 @@ class _SearchBar extends StatelessWidget {
 }
 
 class _DateField extends StatelessWidget {
-  const _DateField({required this.label, required this.value, required this.onTap});
+  const _DateField(
+      {required this.label, required this.value, required this.onTap});
   final String label;
   final String value;
   final VoidCallback onTap;
@@ -495,9 +524,12 @@ class _HighlightChip extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(h.icon, size: 28, color: Theme.of(context).colorScheme.primary),
+            Icon(h.icon,
+                size: 28, color: Theme.of(context).colorScheme.primary),
             const SizedBox(height: 6),
-            Text(h.label, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+            Text(h.label,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall),
           ],
         ),
       ),
@@ -513,29 +545,34 @@ class _FeaturedRoom {
   final String name;
   final String from;
   final String image;
-  const _FeaturedRoom({required this.name, required this.from, required this.image});
+  const _FeaturedRoom(
+      {required this.name, required this.from, required this.image});
 }
 
 const _featuredRooms = <_FeaturedRoom>[
   _FeaturedRoom(
     name: 'Deluxe King',
     from: 'from \$199/night',
-    image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop',
+    image:
+        'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop',
   ),
   _FeaturedRoom(
     name: 'Ocean Suite',
     from: 'from \$349/night',
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop',
+    image:
+        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop',
   ),
   _FeaturedRoom(
     name: 'Family Room',
     from: 'from \$249/night',
-    image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop',
+    image:
+        'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop',
   ),
   _FeaturedRoom(
     name: 'Executive Queen',
     from: 'from \$179/night',
-    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&h=400&fit=crop',
+    image:
+        'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&h=400&fit=crop',
   ),
 ];
 
@@ -569,8 +606,10 @@ class _FeaturedRoomCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(room.name,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 2),
                   Text(room.from, style: Theme.of(context).textTheme.bodySmall),
                 ],

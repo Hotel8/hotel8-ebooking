@@ -18,7 +18,8 @@ import 'booking_confirmation_page.dart';
 // CheckoutData is imported from ../models.dart.
 
 class GuestCheckoutPage extends StatefulWidget {
-  const GuestCheckoutPage({super.key, required this.client, required this.data});
+  const GuestCheckoutPage(
+      {super.key, required this.client, required this.data});
 
   final BffClient client;
   final CheckoutData data;
@@ -44,8 +45,12 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
   bool _submitting = false;
 
   final _arrivalTimes = <String>[
-    'Flexible', 'Before 12:00', '12:00–14:00', '14:00–16:00',
-    '16:00–18:00', 'After 18:00',
+    'Flexible',
+    'Before 12:00',
+    '12:00–14:00',
+    '14:00–16:00',
+    '16:00–18:00',
+    'After 18:00',
   ];
 
   @override
@@ -77,7 +82,8 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
     setState(() => _submitting = true);
     try {
       // Tokenize card via Payments (mock — real implementation calls /proxy/payments/v1/tokens).
-      final token = 'tok_${_cardNumber.text.replaceAll(' ', '').substring(0, 4)}';
+      final token =
+          'tok_${_cardNumber.text.replaceAll(' ', '').substring(0, 4)}';
 
       final reservation = ReservationCreate(
         arrivalDate: widget.data.request.arrivalDate,
@@ -91,7 +97,8 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
         guaranteeCode: 'CC_GUARANTEE',
         creditCardToken: token,
         packages: widget.data.packages,
-        specialRequests: _specialRequests.text.isEmpty ? null : _specialRequests.text,
+        specialRequests:
+            _specialRequests.text.isEmpty ? null : _specialRequests.text,
         promoCode: widget.data.promoCode,
         metasearch: widget.data.metasearch,
       );
@@ -153,29 +160,44 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: _textField(_firstName, 'First name *', validator: _required)),
+                Expanded(
+                    child: _textField(_firstName, 'First name *',
+                        validator: _required)),
                 const SizedBox(width: 12),
-                Expanded(child: _textField(_lastName, 'Last name *', validator: _required)),
+                Expanded(
+                    child: _textField(_lastName, 'Last name *',
+                        validator: _required)),
               ],
             ),
             const SizedBox(height: 12),
-            _textField(_email, 'Email *', validator: _emailValidator,
+            _textField(_email, 'Email *',
+                validator: _emailValidator,
                 keyboardType: TextInputType.emailAddress),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(flex: 2, child: _textField(_phone, 'Phone *', validator: _required,
-                    keyboardType: TextInputType.phone)),
+                Expanded(
+                    flex: 2,
+                    child: _textField(_phone, 'Phone *',
+                        validator: _required,
+                        keyboardType: TextInputType.phone)),
                 const SizedBox(width: 12),
-                Expanded(flex: 3, child: _textField(_country, 'Country *', validator: _required)),
+                Expanded(
+                    flex: 3,
+                    child: _textField(_country, 'Country *',
+                        validator: _required)),
               ],
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
               value: _estimatedArrival,
-              decoration: const InputDecoration(labelText: 'Estimated arrival time'),
-              items: _arrivalTimes.map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
-              onChanged: (v) => setState(() => _estimatedArrival = v ?? 'Flexible'),
+              decoration:
+                  const InputDecoration(labelText: 'Estimated arrival time'),
+              items: _arrivalTimes
+                  .map((t) => DropdownMenuItem(value: t, child: Text(t)))
+                  .toList(),
+              onChanged: (v) =>
+                  setState(() => _estimatedArrival = v ?? 'Flexible'),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -195,13 +217,22 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: _isAdvancePurchase
-                    ? Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.3)
-                    : Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.3),
+                    ? Theme.of(context)
+                        .colorScheme
+                        .errorContainer
+                        .withValues(alpha: 0.3)
+                    : Theme.of(context)
+                        .colorScheme
+                        .secondaryContainer
+                        .withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  Icon(_isAdvancePurchase ? Icons.warning_amber : Icons.lock_outline,
+                  Icon(
+                      _isAdvancePurchase
+                          ? Icons.warning_amber
+                          : Icons.lock_outline,
                       color: _isAdvancePurchase
                           ? Theme.of(context).colorScheme.error
                           : Theme.of(context).colorScheme.primary),
@@ -220,15 +251,20 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
             const SizedBox(height: 12),
             _textField(_cardName, 'Name on card *', validator: _required),
             const SizedBox(height: 12),
-            _textField(_cardNumber, 'Card number *', validator: _cardValidator,
-                keyboardType: TextInputType.number),
+            _textField(_cardNumber, 'Card number *',
+                validator: _cardValidator, keyboardType: TextInputType.number),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _textField(_expiry, 'MM/YY *', validator: _expiryValidator)),
+                Expanded(
+                    child: _textField(_expiry, 'MM/YY *',
+                        validator: _expiryValidator)),
                 const SizedBox(width: 12),
-                Expanded(child: _textField(_cvv, 'CVV *', validator: _cvvValidator,
-                    keyboardType: TextInputType.number, obscure: true)),
+                Expanded(
+                    child: _textField(_cvv, 'CVV *',
+                        validator: _cvvValidator,
+                        keyboardType: TextInputType.number,
+                        obscure: true)),
               ],
             ),
             const SizedBox(height: 24),
@@ -248,7 +284,8 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
             CheckboxListTile(
               value: _agree,
               onChanged: (v) => setState(() => _agree = v ?? false),
-              title: const Text('I agree to the terms and cancellation policy.'),
+              title:
+                  const Text('I agree to the terms and cancellation policy.'),
               contentPadding: EdgeInsets.zero,
             ),
             const SizedBox(height: 8),
@@ -259,8 +296,10 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
                 onPressed: _submitting ? null : _submit,
                 child: _submitting
                     ? const SizedBox(
-                        height: 24, width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
                       )
                     : const Text('Complete Booking'),
               ),
@@ -274,8 +313,11 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
 
   // ── Helpers ──────────────────────────────────────────────────────────────
 
-  Widget _sectionTitle(BuildContext context, String text) =>
-      Text(text, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600));
+  Widget _sectionTitle(BuildContext context, String text) => Text(text,
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(fontWeight: FontWeight.w600));
 
   Widget _textField(
     TextEditingController controller,
@@ -286,7 +328,8 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
   }) =>
       TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+        decoration: InputDecoration(
+            labelText: label, border: const OutlineInputBorder()),
         validator: validator,
         keyboardType: keyboardType,
         obscureText: obscure,
@@ -297,7 +340,8 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
 
   String? _emailValidator(String? v) {
     if (v == null || v.trim().isEmpty) return 'Required';
-    if (!RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$').hasMatch(v.trim())) return 'Enter a valid email';
+    if (!RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$').hasMatch(v.trim()))
+      return 'Enter a valid email';
     return null;
   }
 
@@ -340,15 +384,21 @@ class _SummaryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(data.roomTypeName, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text(data.roomTypeName,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
             Row(
               children: [
                 const Icon(Icons.calendar_today, size: 16),
                 const SizedBox(width: 4),
-                Text('${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
+                Text(
+                    '${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
                 const SizedBox(width: 8),
-                Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}', style: Theme.of(context).textTheme.bodySmall),
+                Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}',
+                    style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const SizedBox(height: 4),
@@ -356,35 +406,45 @@ class _SummaryCard extends StatelessWidget {
               children: [
                 const Icon(Icons.people_outline, size: 16),
                 const SizedBox(width: 4),
-                Text('${data.request.numberOfAdults + data.request.numberOfChildren} guests · ${data.request.numberOfRooms} room${data.request.numberOfRooms != 1 ? "s" : ""}'),
+                Text(
+                    '${data.request.numberOfAdults + data.request.numberOfChildren} guests · ${data.request.numberOfRooms} room${data.request.numberOfRooms != 1 ? "s" : ""}'),
               ],
             ),
             const Divider(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(data.ratePlan.ratePlanName, style: Theme.of(context).textTheme.bodyMedium),
+                Text(data.ratePlan.ratePlanName,
+                    style: Theme.of(context).textTheme.bodyMedium),
                 Text(_money(data.ratePlan.totalAmount)),
               ],
             ),
             ...data.packages.map((p) => Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(p.packageName, style: Theme.of(context).textTheme.bodySmall),
-                  Text(_money(p.perStay ? p.price : p.price * data.nights),
-                      style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-            )),
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(p.packageName,
+                          style: Theme.of(context).textTheme.bodySmall),
+                      Text(_money(p.perStay ? p.price : p.price * data.nights),
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                )),
             const Divider(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                Text('Total',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold)),
                 Text(_money(data.totalAmount),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
           ],

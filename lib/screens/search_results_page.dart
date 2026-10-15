@@ -83,10 +83,14 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
 
   String _imageForRoomType(String code) {
     const map = <String, String>{
-      'KING': 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=500&fit=crop',
-      'SUITE': 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop',
-      'FAMILY': 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=500&fit=crop',
-      'QUEEN': 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=500&fit=crop',
+      'KING':
+          'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=500&fit=crop',
+      'SUITE':
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop',
+      'FAMILY':
+          'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=500&fit=crop',
+      'QUEEN':
+          'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=500&fit=crop',
     };
     return map[code.toUpperCase()] ??
         'https://images.unsplash.com/photo-1566073771259-6a8506098ce5?w=800&h=500&fit=crop';
@@ -104,16 +108,20 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
       }).toList();
     }
     if (_filters.refundableOnly) {
-      list = list.where((r) => r.availability.ratePlans.any((rp) =>
-          (rp.restrictions == null || !rp.restrictions!.closedToArrival) &&
-          rp.ratePlanName.toLowerCase().contains('breakfast'))).toList();
+      list = list
+          .where((r) => r.availability.ratePlans.any((rp) =>
+              (rp.restrictions == null || !rp.restrictions!.closedToArrival) &&
+              rp.ratePlanName.toLowerCase().contains('breakfast')))
+          .toList();
     }
 
     switch (_sort) {
       case _SortOption.priceLowHigh:
-        list = List.from(list)..sort((a, b) => a.lowestTotal.compareTo(b.lowestTotal));
+        list = List.from(list)
+          ..sort((a, b) => a.lowestTotal.compareTo(b.lowestTotal));
       case _SortOption.priceHighLow:
-        list = List.from(list)..sort((a, b) => b.lowestTotal.compareTo(a.lowestTotal));
+        list = List.from(list)
+          ..sort((a, b) => b.lowestTotal.compareTo(a.lowestTotal));
       case _SortOption.recommended:
         break;
     }
@@ -187,7 +195,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   }
 
   int get _nights {
-    return widget.request.departureDate.difference(widget.request.arrivalDate).inDays;
+    return widget.request.departureDate
+        .difference(widget.request.arrivalDate)
+        .inDays;
   }
 
   void _openDetail(SearchResult result) {
@@ -232,7 +242,8 @@ class _DateGuestBar extends StatelessWidget {
     final nights = request.departureDate.difference(request.arrivalDate).inDays;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+      color:
+          Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
       child: Row(
         children: [
           const Icon(Icons.calendar_month, size: 18),
@@ -242,7 +253,8 @@ class _DateGuestBar extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(width: 8),
-          Text('· $nights night${nights != 1 ? "s" : ""}', style: Theme.of(context).textTheme.bodySmall),
+          Text('· $nights night${nights != 1 ? "s" : ""}',
+              style: Theme.of(context).textTheme.bodySmall),
           const Spacer(),
           const Icon(Icons.people_outline, size: 18),
           const SizedBox(width: 4),
@@ -275,11 +287,20 @@ class _SortBar extends StatelessWidget {
         children: [
           Text('Sort by:', style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(width: 8),
-          ChoiceChip(label: const Text('Recommended'), selected: current == _SortOption.recommended, onSelected: (_) => onChanged(_SortOption.recommended)),
+          ChoiceChip(
+              label: const Text('Recommended'),
+              selected: current == _SortOption.recommended,
+              onSelected: (_) => onChanged(_SortOption.recommended)),
           const SizedBox(width: 8),
-          ChoiceChip(label: const Text('Price ↑'), selected: current == _SortOption.priceLowHigh, onSelected: (_) => onChanged(_SortOption.priceLowHigh)),
+          ChoiceChip(
+              label: const Text('Price ↑'),
+              selected: current == _SortOption.priceLowHigh,
+              onSelected: (_) => onChanged(_SortOption.priceLowHigh)),
           const SizedBox(width: 8),
-          ChoiceChip(label: const Text('Price ↓'), selected: current == _SortOption.priceHighLow, onSelected: (_) => onChanged(_SortOption.priceHighLow)),
+          ChoiceChip(
+              label: const Text('Price ↓'),
+              selected: current == _SortOption.priceHighLow,
+              onSelected: (_) => onChanged(_SortOption.priceHighLow)),
         ],
       ),
     );
@@ -291,13 +312,15 @@ class _SortBar extends StatelessWidget {
 // ═══════════════════════════════════════════════════════════════════════════
 
 class _RoomTypeCard extends StatelessWidget {
-  const _RoomTypeCard({required this.result, required this.nights, required this.onSelect});
+  const _RoomTypeCard(
+      {required this.result, required this.nights, required this.onSelect});
   final SearchResult result;
   final int nights;
   final VoidCallback onSelect;
 
   String _money(double amt) {
-    final fmt = NumberFormat.currency(name: result.currency, symbol: _symbolFor(result.currency));
+    final fmt = NumberFormat.currency(
+        name: result.currency, symbol: _symbolFor(result.currency));
     return fmt.format(amt);
   }
 
@@ -332,12 +355,15 @@ class _RoomTypeCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(title,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600)),
                     ),
                     if (avail <= 3)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.errorContainer,
                           borderRadius: BorderRadius.circular(12),
@@ -346,7 +372,8 @@ class _RoomTypeCard extends StatelessWidget {
                           'Only $avail left',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Theme.of(context).colorScheme.onErrorContainer,
+                            color:
+                                Theme.of(context).colorScheme.onErrorContainer,
                           ),
                         ),
                       ),
@@ -361,11 +388,16 @@ class _RoomTypeCard extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 4,
-                    children: rt.features.take(4).map((f) => Chip(
-                      label: Text(f, style: const TextStyle(fontSize: 12)),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      visualDensity: VisualDensity.compact,
-                    )).toList(),
+                    children: rt.features
+                        .take(4)
+                        .map((f) => Chip(
+                              label:
+                                  Text(f, style: const TextStyle(fontSize: 12)),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                            ))
+                        .toList(),
                   ),
                 ],
                 const Divider(height: 24),
@@ -379,14 +411,18 @@ class _RoomTypeCard extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodySmall),
                         Text(
                           '${_money(result.lowestNightly)}/night',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
-                        Text('${_money(result.lowestTotal)} total · $nights night${nights != 1 ? "s" : ""}',
+                        Text(
+                            '${_money(result.lowestTotal)} total · $nights night${nights != 1 ? "s" : ""}',
                             style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
-                    FilledButton(onPressed: onSelect, child: const Text('Select Room')),
+                    FilledButton(
+                        onPressed: onSelect, child: const Text('Select Room')),
                   ],
                 ),
               ],
@@ -431,14 +467,23 @@ class _FilterSheet extends StatefulWidget {
 }
 
 class _FilterSheetState extends State<_FilterSheet> {
-  final _allFeatures = <String>['WiFi', 'Ocean View', 'Balcony', 'King Bed', 'AC', 'Minibar'];
+  final _allFeatures = <String>[
+    'WiFi',
+    'Ocean View',
+    'Balcony',
+    'King Bed',
+    'AC',
+    'Minibar'
+  ];
 
   @override
   Widget build(BuildContext context) {
     final f = widget.filters;
     return Padding(
       padding: EdgeInsets.only(
-        left: 16, right: 16, top: 24,
+        left: 16,
+        right: 16,
+        top: 24,
         bottom: MediaQuery.of(context).viewInsets.bottom + 24,
       ),
       child: SingleChildScrollView(
@@ -448,7 +493,8 @@ class _FilterSheetState extends State<_FilterSheet> {
           children: [
             Text('Filters', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
-            Text('Max price (total)', style: Theme.of(context).textTheme.titleSmall),
+            Text('Max price (total)',
+                style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 8),
             Column(
               children: [
@@ -458,20 +504,24 @@ class _FilterSheetState extends State<_FilterSheet> {
                   divisions: 19,
                   value: (f.maxPrice ?? 2000).clamp(100, 2000),
                   label: '\$${(f.maxPrice ?? 2000).round()}',
-                  onChanged: (v) => setState(() => f.maxPrice = v >= 2000 ? null : v),
+                  onChanged: (v) =>
+                      setState(() => f.maxPrice = v >= 2000 ? null : v),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('\$100'),
-                    Text(f.maxPrice == null ? 'Any' : '\$${f.maxPrice!.round()}'),
+                    Text(f.maxPrice == null
+                        ? 'Any'
+                        : '\$${f.maxPrice!.round()}'),
                     const Text('\$2000+'),
                   ],
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            Text('Room features', style: Theme.of(context).textTheme.titleSmall),
+            Text('Room features',
+                style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -541,18 +591,24 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final msg = error is BffException ? (error as BffException).message : error.toString();
+    final msg = error is BffException
+        ? (error as BffException).message
+        : error.toString();
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 48, color: Theme.of(context).colorScheme.error),
+            Icon(Icons.error_outline,
+                size: 48, color: Theme.of(context).colorScheme.error),
             const SizedBox(height: 16),
-            Text('Unable to load results', style: Theme.of(context).textTheme.titleMedium),
+            Text('Unable to load results',
+                style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
-            Text(msg, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall),
+            Text(msg,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 16),
             FilledButton(onPressed: onRetry, child: const Text('Retry')),
           ],
@@ -570,7 +626,8 @@ class _EmptyState extends StatelessWidget {
     return ListView(
       children: [
         const SizedBox(height: 80),
-        Icon(Icons.search_off, size: 48, color: Theme.of(context).colorScheme.outline),
+        Icon(Icons.search_off,
+            size: 48, color: Theme.of(context).colorScheme.outline),
         const SizedBox(height: 16),
         Text('No rooms available for the selected dates.',
             textAlign: TextAlign.center,

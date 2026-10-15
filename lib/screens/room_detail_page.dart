@@ -84,10 +84,26 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
       // Fall back to default add-ons.
       setState(() {
         _availablePackages = const [
-          Package(packageCode: 'BREAKFAST', packageName: 'Breakfast', price: 30, perStay: false),
-          Package(packageCode: 'PARKING', packageName: 'Parking', price: 25, perStay: false),
-          Package(packageCode: 'SPA', packageName: 'Spa Credit', price: 50, perStay: true),
-          Package(packageCode: 'AIRPORT', packageName: 'Airport Transfer', price: 60, perStay: true),
+          Package(
+              packageCode: 'BREAKFAST',
+              packageName: 'Breakfast',
+              price: 30,
+              perStay: false),
+          Package(
+              packageCode: 'PARKING',
+              packageName: 'Parking',
+              price: 25,
+              perStay: false),
+          Package(
+              packageCode: 'SPA',
+              packageName: 'Spa Credit',
+              price: 50,
+              perStay: true),
+          Package(
+              packageCode: 'AIRPORT',
+              packageName: 'Airport Transfer',
+              price: 60,
+              perStay: true),
         ];
         _loadingPackages = false;
       });
@@ -107,14 +123,16 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
   String get _currency => _selectedRate?.currencyCode ?? widget.result.currency;
 
   String _money(double amt) {
-    final fmt = NumberFormat.currency(name: _currency, symbol: _symbolFor(_currency));
+    final fmt =
+        NumberFormat.currency(name: _currency, symbol: _symbolFor(_currency));
     return fmt.format(amt);
   }
 
   @override
   Widget build(BuildContext context) {
     final rt = widget.result.roomTypeDetail;
-    final title = rt?.roomTypeName ?? widget.result.availability.roomTypeDescription;
+    final title =
+        rt?.roomTypeName ?? widget.result.availability.roomTypeDescription;
 
     return Scaffold(
       body: NestedScrollView(
@@ -125,7 +143,8 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(title),
               background: _gallery.isEmpty
-                  ? Container(color: Theme.of(context).colorScheme.primaryContainer)
+                  ? Container(
+                      color: Theme.of(context).colorScheme.primaryContainer)
                   : Image.network(_gallery.first, fit: BoxFit.cover),
             ),
           ),
@@ -142,7 +161,8 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
                 separatorBuilder: (_, __) => const SizedBox(width: 8),
                 itemBuilder: (context, i) => ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(_gallery[i], width: 160, height: 120, fit: BoxFit.cover),
+                  child: Image.network(_gallery[i],
+                      width: 160, height: 120, fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -157,34 +177,47 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
                 children: [
                   _spec(Icons.bed, rt.bedType ?? 'Standard bed'),
                   _spec(Icons.people, 'Sleeps ${rt.maxOccupancy}'),
-                  _spec(Icons.smoke_free, rt.isSmoking ? 'Smoking' : 'Non-smoking'),
+                  _spec(Icons.smoke_free,
+                      rt.isSmoking ? 'Smoking' : 'Non-smoking'),
                 ],
               ),
             const SizedBox(height: 16),
-            if (rt?.description != null || widget.result.availability.roomTypeDescription.isNotEmpty)
+            if (rt?.description != null ||
+                widget.result.availability.roomTypeDescription.isNotEmpty)
               Text(
-                rt?.description ?? widget.result.availability.roomTypeDescription,
+                rt?.description ??
+                    widget.result.availability.roomTypeDescription,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             const SizedBox(height: 16),
 
             // ── Amenities ────────────────────────────────────────────────
             if (rt != null && rt.features.isNotEmpty) ...[
-              Text('Amenities', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+              Text('Amenities',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: rt.features.map((f) => Chip(
-                  avatar: const Icon(Icons.check, size: 16),
-                  label: Text(f),
-                )).toList(),
+                children: rt.features
+                    .map((f) => Chip(
+                          avatar: const Icon(Icons.check, size: 16),
+                          label: Text(f),
+                        ))
+                    .toList(),
               ),
               const SizedBox(height: 24),
             ],
 
             // ── Rate plan comparison ────────────────────────────────────
-            Text('Rate Plans', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text('Rate Plans',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
             ...widget.result.availability.ratePlans.map((rp) => _RatePlanTile(
                   rate: rp,
@@ -195,7 +228,11 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
             const SizedBox(height: 24),
 
             // ── Package add-ons ──────────────────────────────────────────
-            Text('Add-ons & Packages', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text('Add-ons & Packages',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
             if (_loadingPackages)
               const Padding(
@@ -219,29 +256,42 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
 
             // ── Price summary ────────────────────────────────────────────
             Card(
-              color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+              color: Theme.of(context)
+                  .colorScheme
+                  .primaryContainer
+                  .withValues(alpha: 0.3),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     if (_selectedRate != null) ...[
                       _PriceRow(
-                        label: 'Room rate · ${widget.nights} night${widget.nights != 1 ? "s" : ""}',
+                        label:
+                            'Room rate · ${widget.nights} night${widget.nights != 1 ? "s" : ""}',
                         value: _money(_selectedRate!.totalAmount),
                       ),
                       const SizedBox(height: 8),
                     ],
                     ..._selectedPackages.map((p) => _PriceRow(
-                          label: '${p.packageName} ${p.perStay ? "(per stay)" : "(${widget.nights}×)"}',
-                          value: _money(p.perStay ? p.price : p.price * widget.nights),
+                          label:
+                              '${p.packageName} ${p.perStay ? "(per stay)" : "(${widget.nights}×)"}',
+                          value: _money(
+                              p.perStay ? p.price : p.price * widget.nights),
                         )),
                     const Divider(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Total (excl. taxes)', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                        Text('Total (excl. taxes)',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold)),
                         Text(_money(_totalAmount),
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ],
@@ -287,7 +337,8 @@ class _RoomDetailPageState extends State<RoomDetailPage> {
           widget.result.availability.roomTypeDescription,
       roomTypeCode: widget.result.roomTypeDetail?.roomTypeCode ??
           widget.result.availability.roomType,
-      roomTypeId: widget.result.roomTypeDetail?.id ?? widget.result.availability.roomType,
+      roomTypeId: widget.result.roomTypeDetail?.id ??
+          widget.result.availability.roomType,
       ratePlan: _selectedRate!,
       packages: _selectedPackages.toList(),
       promoCode: widget.promoCode,
@@ -324,9 +375,15 @@ class _RatePlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isNonRefundable = rate.restrictions != null && rate.restrictions!.minLos > 7;
+    final isNonRefundable =
+        rate.restrictions != null && rate.restrictions!.minLos > 7;
     return Card(
-      color: selected ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3) : null,
+      color: selected
+          ? Theme.of(context)
+              .colorScheme
+              .primaryContainer
+              .withValues(alpha: 0.3)
+          : null,
       child: InkWell(
         onTap: onSelect,
         borderRadius: BorderRadius.circular(12),
@@ -337,12 +394,18 @@ class _RatePlanTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(selected ? Icons.radio_button_checked : Icons.radio_button_off,
+                  Icon(
+                      selected
+                          ? Icons.radio_button_checked
+                          : Icons.radio_button_off,
                       color: Theme.of(context).colorScheme.primary),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(rate.ratePlanName,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
@@ -350,9 +413,13 @@ class _RatePlanTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${_money(rate.averageNightlyRate)}/night', style: Theme.of(context).textTheme.bodyMedium),
+                  Text('${_money(rate.averageNightlyRate)}/night',
+                      style: Theme.of(context).textTheme.bodyMedium),
                   Text('Total ${_money(rate.totalAmount)}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 6),
@@ -360,7 +427,8 @@ class _RatePlanTile extends StatelessWidget {
                 spacing: 8,
                 children: [
                   Chip(
-                    label: Text(isNonRefundable ? 'Non-refundable' : 'Free cancel 48h'),
+                    label: Text(
+                        isNonRefundable ? 'Non-refundable' : 'Free cancel 48h'),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   ),

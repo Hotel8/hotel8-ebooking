@@ -46,11 +46,11 @@ class BffClient {
   String _path(String p) => '$_baseUrl$p';
 
   /// Generic JSON GET — used by the bootstrap property-registry lookup.
-  Future<Map<String, dynamic>> getRawJson(String path) async =>
-      _getJson(path);
+  Future<Map<String, dynamic>> getRawJson(String path) async => _getJson(path);
 
   Future<Map<String, dynamic>> _getJson(String path) async {
-    final resp = await _httpClient.get(Uri.parse(_path(path)), headers: _headers());
+    final resp =
+        await _httpClient.get(Uri.parse(_path(path)), headers: _headers());
     return _handle(resp);
   }
 
@@ -91,7 +91,8 @@ class BffClient {
     String message;
     try {
       final decoded = jsonDecode(body) as Map<String, dynamic>;
-      message = decoded['message'] as String? ?? decoded['error'] as String? ?? body;
+      message =
+          decoded['message'] as String? ?? decoded['error'] as String? ?? body;
     } catch (_) {
       message = body;
     }
@@ -122,7 +123,8 @@ class BffClient {
 
   /// `GET /proxy/pms/.../content`
   Future<Property> getProperty(String propertyCode) async {
-    final json = await _getJson('/proxy/pms/par/v1/properties/$propertyCode/content');
+    final json =
+        await _getJson('/proxy/pms/par/v1/properties/$propertyCode/content');
     return Property.fromJson(json);
   }
 
@@ -135,8 +137,12 @@ class BffClient {
     final json = await _getJson(
       '/proxy/hotel8-pms/v1/properties/$propertyId/room-types',
     );
-    final list = json['room_types'] as List<dynamic>? ?? json['data'] as List<dynamic>? ?? [];
-    return list.map((e) => RoomType.fromJson(e as Map<String, dynamic>)).toList();
+    final list = json['room_types'] as List<dynamic>? ??
+        json['data'] as List<dynamic>? ??
+        [];
+    return list
+        .map((e) => RoomType.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// `GET /proxy/pms/par/v1/roomTypes/{code}`
@@ -157,7 +163,9 @@ class BffClient {
       '/proxy/hotel8-pms/v1/properties/$propertyId/rate-plans',
     );
     final list = (json['items'] as List<dynamic>?) ?? const [];
-    return list.map((e) => RatePlan.fromJson(e as Map<String, dynamic>)).toList();
+    return list
+        .map((e) => RatePlan.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// `GET /proxy/hotel8-pms/v1/properties/{propertyId}/packages`
@@ -166,7 +174,9 @@ class BffClient {
       '/proxy/hotel8-pms/v1/properties/$propertyId/packages',
     );
     final list = (json['items'] as List<dynamic>?) ?? const [];
-    return list.map((e) => Package.fromJson(e as Map<String, dynamic>)).toList();
+    return list
+        .map((e) => Package.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   // ═════════════════════════════════════════════════════════════════════════
@@ -232,7 +242,8 @@ class BffClient {
   }
 
   /// `POST /proxy/hotel8-pms/v1/properties/{propertyId}/reservations/{id}/cancel`
-  Future<void> cancelReservation(String propertyId, String reservationId) async {
+  Future<void> cancelReservation(
+      String propertyId, String reservationId) async {
     await _postJson(
       '/proxy/hotel8-pms/v1/properties/$propertyId'
       '/reservations/$reservationId/cancel',
@@ -306,7 +317,8 @@ class BffClient {
 
   /// `GET /proxy/hotel8-pms/v1/properties/{propertyId}/guarantee-policies` —
   /// the checkout renders the property's guarantee terms before commitment.
-  Future<List<Map<String, dynamic>>> getGuaranteePolicies(String propertyId) async {
+  Future<List<Map<String, dynamic>>> getGuaranteePolicies(
+      String propertyId) async {
     final json = await _getJson(
       '/proxy/hotel8-pms/v1/properties/$propertyId/guarantee-policies',
     );
@@ -315,7 +327,7 @@ class BffClient {
         .toList();
   }
 
-    void close() => _httpClient.close();
+  void close() => _httpClient.close();
 }
 
 class BffException implements Exception {

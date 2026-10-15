@@ -43,7 +43,8 @@ class BookingConfirmationPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(height: 16),
-          Icon(Icons.check_circle, size: 72, color: Theme.of(context).colorScheme.primary),
+          Icon(Icons.check_circle,
+              size: 72, color: Theme.of(context).colorScheme.primary),
           const SizedBox(height: 16),
           Text('Your booking is confirmed!',
               textAlign: TextAlign.center,
@@ -57,7 +58,8 @@ class BookingConfirmationPage extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('Confirmation Number', style: Theme.of(context).textTheme.bodySmall),
+                Text('Confirmation Number',
+                    style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 4),
                 SelectableText(
                   reservation.confirmationNumber.isEmpty
@@ -78,13 +80,19 @@ class BookingConfirmationPage extends StatelessWidget {
             _infoRow(context, 'Property', data.propertyName),
             _infoRow(context, 'Room', data.roomTypeName),
             _infoRow(context, 'Rate plan', data.ratePlan.ratePlanName),
-            _infoRow(context, 'Check-in', DateFormat('EEE, MMM d, yyyy').format(reservation.arrivalDate)),
-            _infoRow(context, 'Check-out', DateFormat('EEE, MMM d, yyyy').format(reservation.departureDate)),
+            _infoRow(context, 'Check-in',
+                DateFormat('EEE, MMM d, yyyy').format(reservation.arrivalDate)),
+            _infoRow(
+                context,
+                'Check-out',
+                DateFormat('EEE, MMM d, yyyy')
+                    .format(reservation.departureDate)),
             _infoRow(context, 'Nights', reservation.numberOfNights.toString()),
             _infoRow(context, 'Guests',
                 '${reservation.numberOfAdults + reservation.numberOfChildren}'),
             if (data.packages.isNotEmpty)
-              _infoRow(context, 'Add-ons', data.packages.map((p) => p.packageName).join(', ')),
+              _infoRow(context, 'Add-ons',
+                  data.packages.map((p) => p.packageName).join(', ')),
             const Divider(),
             _infoRow(context, 'Total paid', _money(data.totalAmount)),
           ]),
@@ -96,8 +104,10 @@ class BookingConfirmationPage extends StatelessWidget {
               color: Theme.of(context).colorScheme.tertiaryContainer,
               child: ListTile(
                 leading: const Icon(Icons.workspace_premium),
-                title: Text('You earned ${NumberFormat.decimalPattern().format(pointsEarned!)} points!'),
-                subtitle: const Text('Points will be credited after check-out.'),
+                title: Text(
+                    'You earned ${NumberFormat.decimalPattern().format(pointsEarned!)} points!'),
+                subtitle:
+                    const Text('Points will be credited after check-out.'),
               ),
             ),
             const SizedBox(height: 16),
@@ -107,7 +117,8 @@ class BookingConfirmationPage extends StatelessWidget {
           _InfoCard(title: "What's Next", children: [
             const _Bullet('Check-in time: 3:00 PM'),
             const _Bullet('Check-out time: 11:00 AM'),
-            const _Bullet('Bring a valid ID and the credit card used for booking.'),
+            const _Bullet(
+                'Bring a valid ID and the credit card used for booking.'),
             const _Bullet('A confirmation email has been sent.'),
           ]),
           const SizedBox(height: 16),
@@ -150,14 +161,20 @@ class BookingConfirmationPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Upgrade Your Stay',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(fontWeight: FontWeight.w600)),
                         const SizedBox(height: 4),
-                        Text('Room upgrades, spa packages, late checkout — available in the Guest App.',
+                        Text(
+                            'Room upgrades, spa packages, late checkout — available in the Guest App.',
                             style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
                   ),
-                  Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onSecondaryContainer),
+                  Icon(Icons.chevron_right,
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
                 ],
               ),
             ),
@@ -192,13 +209,17 @@ class BookingConfirmationPage extends StatelessWidget {
       ..writeln('VERSION:2.0')
       ..writeln('BEGIN:VEVENT')
       ..writeln('UID:${reservation.confirmationNumber}@ebooking')
-      ..writeln('DTSTART:${start.year}${start.month.toString().padLeft(2, '0')}${start.day.toString().padLeft(2, '0')}T150000')
-      ..writeln('DTEND:${end.year}${end.month.toString().padLeft(2, '0')}${end.day.toString().padLeft(2, '0')}T110000')
+      ..writeln(
+          'DTSTART:${start.year}${start.month.toString().padLeft(2, '0')}${start.day.toString().padLeft(2, '0')}T150000')
+      ..writeln(
+          'DTEND:${end.year}${end.month.toString().padLeft(2, '0')}${end.day.toString().padLeft(2, '0')}T110000')
       ..writeln('SUMMARY:$title')
       ..writeln('END:VEVENT')
       ..writeln('END:VCALENDAR');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Calendar event created: $title'), duration: const Duration(seconds: 3)),
+      SnackBar(
+          content: Text('Calendar event created: $title'),
+          duration: const Duration(seconds: 3)),
     );
     debugPrint(ics.toString());
   }
@@ -211,9 +232,15 @@ class BookingConfirmationPage extends StatelessWidget {
         children: [
           SizedBox(
             width: 100,
-            child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.outline)),
+            child: Text(label,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.outline)),
           ),
-          Expanded(child: Text(value, style: Theme.of(context).textTheme.bodyMedium)),
+          Expanded(
+              child:
+                  Text(value, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
     );
@@ -233,7 +260,11 @@ class _InfoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text(title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 12),
             ...children,
           ],
@@ -255,7 +286,8 @@ class _Bullet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('• ', style: TextStyle(fontSize: 16)),
-          Expanded(child: Text(text, style: Theme.of(context).textTheme.bodyMedium)),
+          Expanded(
+              child: Text(text, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
     );

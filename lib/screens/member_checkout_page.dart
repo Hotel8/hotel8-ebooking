@@ -16,7 +16,8 @@ import '../models.dart';
 import 'booking_confirmation_page.dart';
 
 class MemberCheckoutPage extends StatefulWidget {
-  const MemberCheckoutPage({super.key, required this.client, required this.data});
+  const MemberCheckoutPage(
+      {super.key, required this.client, required this.data});
 
   final BffClient client;
   final CheckoutData data;
@@ -88,8 +89,10 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _submitting = true);
     try {
-      final selectedCard = _savedPayments.firstWhere((p) => p.id == _selectedPaymentId);
-      final token = 'tok_${selectedCard.brand.toLowerCase()}_${selectedCard.last4}';
+      final selectedCard =
+          _savedPayments.firstWhere((p) => p.id == _selectedPaymentId);
+      final token =
+          'tok_${selectedCard.brand.toLowerCase()}_${selectedCard.last4}';
 
       final reservation = ReservationCreate(
         arrivalDate: widget.data.request.arrivalDate,
@@ -104,7 +107,8 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
         guaranteeCode: 'CC_GUARANTEE',
         creditCardToken: token,
         packages: widget.data.packages,
-        specialRequests: _specialRequests.text.isEmpty ? null : _specialRequests.text,
+        specialRequests:
+            _specialRequests.text.isEmpty ? null : _specialRequests.text,
         promoCode: widget.data.promoCode,
         metasearch: widget.data.metasearch,
       );
@@ -164,18 +168,22 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
             Card(
               color: Theme.of(context).colorScheme.tertiaryContainer,
               child: ListTile(
-                leading: const CircleAvatar(child: Icon(Icons.workspace_premium)),
+                leading:
+                    const CircleAvatar(child: Icon(Icons.workspace_premium)),
                 title: Text('${_member.tier} Member · ${_member.memberNumber}'),
-                subtitle: Text('${NumberFormat.decimalPattern().format(_member.pointsBalance)} points available'),
+                subtitle: Text(
+                    '${NumberFormat.decimalPattern().format(_member.pointsBalance)} points available'),
                 trailing: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     '+${NumberFormat.decimalPattern().format(_pointsToEarn)} pts',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -183,7 +191,10 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
             const SizedBox(height: 16),
 
             // ── Booking summary ─────────────────────────────────────────
-            _SummaryCard(data: widget.data, memberDiscount: _memberDiscount, currency: widget.data.currency),
+            _SummaryCard(
+                data: widget.data,
+                memberDiscount: _memberDiscount,
+                currency: widget.data.currency),
             const SizedBox(height: 20),
 
             // ── Guest details (pre-filled) ───────────────────────────────
@@ -191,15 +202,22 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: _field(_firstName, 'First name *', validator: _required)),
+                Expanded(
+                    child: _field(_firstName, 'First name *',
+                        validator: _required)),
                 const SizedBox(width: 12),
-                Expanded(child: _field(_lastName, 'Last name *', validator: _required)),
+                Expanded(
+                    child:
+                        _field(_lastName, 'Last name *', validator: _required)),
               ],
             ),
             const SizedBox(height: 12),
-            _field(_email, 'Email *', validator: _emailValidator, keyboardType: TextInputType.emailAddress),
+            _field(_email, 'Email *',
+                validator: _emailValidator,
+                keyboardType: TextInputType.emailAddress),
             const SizedBox(height: 12),
-            _field(_phone, 'Phone *', validator: _required, keyboardType: TextInputType.phone),
+            _field(_phone, 'Phone *',
+                validator: _required, keyboardType: TextInputType.phone),
             const SizedBox(height: 12),
             TextFormField(
               controller: _specialRequests,
@@ -243,9 +261,12 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    _row(context, 'Member discount (10%)', '-$sym${_memberDiscount.toStringAsFixed(2)}'),
-                    _row(context, 'Points earned this stay', '+${NumberFormat.decimalPattern().format(_pointsToEarn)} pts'),
-                    _row(context, 'New balance after stay', '${NumberFormat.decimalPattern().format(_member.pointsBalance + _pointsToEarn)} pts'),
+                    _row(context, 'Member discount (10%)',
+                        '-$sym${_memberDiscount.toStringAsFixed(2)}'),
+                    _row(context, 'Points earned this stay',
+                        '+${NumberFormat.decimalPattern().format(_pointsToEarn)} pts'),
+                    _row(context, 'New balance after stay',
+                        '${NumberFormat.decimalPattern().format(_member.pointsBalance + _pointsToEarn)} pts'),
                   ],
                 ),
               ),
@@ -260,8 +281,10 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
                 onPressed: _submitting ? null : _submit,
                 icon: _submitting
                     ? const SizedBox(
-                        height: 24, width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white))
                     : const Icon(Icons.bolt),
                 label: Text(_submitting ? 'Booking...' : 'Complete Booking'),
               ),
@@ -273,8 +296,11 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
     );
   }
 
-  Widget _sectionTitle(BuildContext context, String text) =>
-      Text(text, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600));
+  Widget _sectionTitle(BuildContext context, String text) => Text(text,
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(fontWeight: FontWeight.w600));
 
   Widget _field(
     TextEditingController controller,
@@ -284,7 +310,8 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
   }) =>
       TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
+        decoration: InputDecoration(
+            labelText: label, border: const OutlineInputBorder()),
         validator: validator,
         keyboardType: keyboardType,
       );
@@ -295,16 +322,22 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(label, style: Theme.of(context).textTheme.bodyMedium),
-            Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text(value,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
           ],
         ),
       );
 
-  String? _required(String? v) => (v == null || v.trim().isEmpty) ? 'Required' : null;
+  String? _required(String? v) =>
+      (v == null || v.trim().isEmpty) ? 'Required' : null;
 
   String? _emailValidator(String? v) {
     if (v == null || v.trim().isEmpty) return 'Required';
-    if (!RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$').hasMatch(v.trim())) return 'Enter a valid email';
+    if (!RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$').hasMatch(v.trim()))
+      return 'Enter a valid email';
     return null;
   }
 }
@@ -352,7 +385,8 @@ class _SavedPayment {
 // ═══════════════════════════════════════════════════════════════════════════
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.data, this.memberDiscount = 0, required this.currency});
+  const _SummaryCard(
+      {required this.data, this.memberDiscount = 0, required this.currency});
   final CheckoutData data;
   final double memberDiscount;
   final String currency;
@@ -368,15 +402,21 @@ class _SummaryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(data.roomTypeName, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text(data.roomTypeName,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
             Row(
               children: [
                 const Icon(Icons.calendar_today, size: 16),
                 const SizedBox(width: 4),
-                Text('${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
+                Text(
+                    '${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
                 const SizedBox(width: 8),
-                Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}', style: Theme.of(context).textTheme.bodySmall),
+                Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}',
+                    style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const Divider(height: 20),
@@ -392,8 +432,12 @@ class _SummaryCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Member discount', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-                  Text('-${_money(memberDiscount)}', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                  Text('Member discount',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary)),
+                  Text('-${_money(memberDiscount)}',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary)),
                 ],
               ),
             ],
@@ -401,9 +445,16 @@ class _SummaryCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                Text('Total',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold)),
                 Text(_money(data.totalAmount - memberDiscount),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
           ],

@@ -387,7 +387,7 @@ packages:
   sentin8:
     dependency: "direct main"
     description:
-      path: "../../../sentin8/sdk/flutter/sentin8"
+      path: "../../sentin8/sentin8-flutter"
       relative: true
     source: path
     version: "0.1.0"

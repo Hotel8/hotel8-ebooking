@@ -90,7 +90,8 @@ class Property {
         propertyName: json['property_name'] as String,
         timezone: json['timezone'] as String? ?? 'UTC',
         currencyCode: json['currency_code'] as String? ?? 'USD',
-        languages: (json['languages'] as List<dynamic>?)?.cast<String>() ?? const [],
+        languages:
+            (json['languages'] as List<dynamic>?)?.cast<String>() ?? const [],
         address: json['address'] != null
             ? Address.fromJson(json['address'] as Map<String, dynamic>)
             : null,
@@ -148,7 +149,8 @@ class RoomType {
         maxOccupancy: (json['max_occupancy'] as num?)?.toInt() ?? 2,
         bedType: json['bed_type'] as String?,
         isSmoking: json['is_smoking'] as bool? ?? false,
-        features: (json['features'] as List<dynamic>?)?.cast<String>() ?? const [],
+        features:
+            (json['features'] as List<dynamic>?)?.cast<String>() ?? const [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -321,7 +323,8 @@ class RateRestrictions {
     this.maxLos = 28,
   });
 
-  factory RateRestrictions.fromJson(Map<String, dynamic> json) => RateRestrictions(
+  factory RateRestrictions.fromJson(Map<String, dynamic> json) =>
+      RateRestrictions(
         closedToArrival: json['closed_to_arrival'] as bool? ?? false,
         closedToDeparture: json['closed_to_departure'] as bool? ?? false,
         minLos: (json['min_los'] as num?)?.toInt() ?? 1,
@@ -348,15 +351,18 @@ class AvailableRatePlan {
     this.restrictions,
   });
 
-  factory AvailableRatePlan.fromJson(Map<String, dynamic> json) => AvailableRatePlan(
+  factory AvailableRatePlan.fromJson(Map<String, dynamic> json) =>
+      AvailableRatePlan(
         ratePlanCode: json['rate_plan_code'] as String,
         ratePlanName: json['rate_plan_name'] as String? ?? '',
         totalAmount: (json['total_amount'] as num?)?.toDouble() ?? 0.0,
-        averageNightlyRate: (json['average_nightly_rate'] as num?)?.toDouble() ?? 0.0,
+        averageNightlyRate:
+            (json['average_nightly_rate'] as num?)?.toDouble() ?? 0.0,
         currencyCode: json['currency_code'] as String? ?? 'USD',
         isAvailable: json['is_available'] as bool? ?? true,
         restrictions: json['restrictions'] != null
-            ? RateRestrictions.fromJson(json['restrictions'] as Map<String, dynamic>)
+            ? RateRestrictions.fromJson(
+                json['restrictions'] as Map<String, dynamic>)
             : null,
       );
 }
@@ -376,13 +382,15 @@ class AvailableRoomType {
     required this.ratePlans,
   });
 
-  factory AvailableRoomType.fromJson(Map<String, dynamic> json) => AvailableRoomType(
+  factory AvailableRoomType.fromJson(Map<String, dynamic> json) =>
+      AvailableRoomType(
         roomType: json['room_type'] as String,
         roomTypeDescription: json['room_type_description'] as String? ?? '',
         availableRooms: (json['available_rooms'] as num?)?.toInt() ?? 0,
         totalRooms: (json['total_rooms'] as num?)?.toInt() ?? 0,
         ratePlans: (json['rate_plans'] as List<dynamic>?)
-                ?.map((e) => AvailableRatePlan.fromJson(e as Map<String, dynamic>))
+                ?.map((e) =>
+                    AvailableRatePlan.fromJson(e as Map<String, dynamic>))
                 .toList() ??
             const [],
       );
@@ -409,11 +417,15 @@ class AvailabilityResponse {
     return AvailabilityResponse(
       propertyCode: json['property_code'] as String? ?? '',
       chainCode: json['chain_code'] as String? ?? '',
-      arrivalDate: DateTime.tryParse(json['arrival_date'] as String? ?? '') ?? DateTime.now(),
-      departureDate: DateTime.tryParse(json['departure_date'] as String? ?? '') ?? DateTime.now(),
+      arrivalDate: DateTime.tryParse(json['arrival_date'] as String? ?? '') ??
+          DateTime.now(),
+      departureDate:
+          DateTime.tryParse(json['departure_date'] as String? ?? '') ??
+              DateTime.now(),
       numberOfNights: (json['number_of_nights'] as num?)?.toInt() ?? 1,
       roomTypes: (json['room_types'] as List<dynamic>?)
-              ?.map((e) => AvailableRoomType.fromJson(e as Map<String, dynamic>))
+              ?.map(
+                  (e) => AvailableRoomType.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -451,8 +463,9 @@ class SearchResult {
         .reduce((a, b) => a < b ? a : b);
   }
 
-  String get currency =>
-      availability.ratePlans.isEmpty ? 'USD' : availability.ratePlans.first.currencyCode;
+  String get currency => availability.ratePlans.isEmpty
+      ? 'USD'
+      : availability.ratePlans.first.currencyCode;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -473,7 +486,9 @@ enum ReservationStatus {
     return ReservationStatus.values.firstWhere(
       (e) => e.name.toLowerCase() == n,
       // PMS res_status: CONFIRMED maps to reserved (booked, not arrived).
-      orElse: () => n == 'confirmed' ? ReservationStatus.reserved : ReservationStatus.reserved,
+      orElse: () => n == 'confirmed'
+          ? ReservationStatus.reserved
+          : ReservationStatus.reserved,
     );
   }
 
@@ -542,9 +557,13 @@ class Reservation {
   factory Reservation.fromJson(Map<String, dynamic> json) => Reservation(
         id: json['id'] as String,
         confirmationNumber: json['confirmation_number'] as String? ?? '',
-        status: ReservationStatus.fromString(json['status'] as String? ?? 'RESERVED'),
-        arrivalDate: DateTime.tryParse(json['arrival_date'] as String? ?? '') ?? DateTime.now(),
-        departureDate: DateTime.tryParse(json['departure_date'] as String? ?? '') ?? DateTime.now(),
+        status: ReservationStatus.fromString(
+            json['status'] as String? ?? 'RESERVED'),
+        arrivalDate: DateTime.tryParse(json['arrival_date'] as String? ?? '') ??
+            DateTime.now(),
+        departureDate:
+            DateTime.tryParse(json['departure_date'] as String? ?? '') ??
+                DateTime.now(),
         numberOfNights: (json['number_of_nights'] as num?)?.toInt() ?? 1,
         numberOfRooms: (json['number_of_rooms'] as num?)?.toInt() ?? 1,
         numberOfAdults: (json['number_of_adults'] as num?)?.toInt() ?? 1,
@@ -556,7 +575,8 @@ class Reservation {
         roomTypeName: json['room_type_name'] as String?,
         ratePlanName: json['rate_plan_name'] as String?,
         specialRequests: json['special_requests'] as String?,
-        createdAt: DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now(),
+        createdAt: DateTime.tryParse(json['created_at'] as String? ?? '') ??
+            DateTime.now(),
       );
 }
 
@@ -701,13 +721,15 @@ class PromoCodeResult {
     this.ratePlanCode,
   });
 
-  factory PromoCodeResult.fromJson(Map<String, dynamic> json) => PromoCodeResult(
+  factory PromoCodeResult.fromJson(Map<String, dynamic> json) =>
+      PromoCodeResult(
         valid: json['valid'] as bool? ?? false,
         message: json['message'] as String?,
         discountPercent: (json['discount_percent'] as num?)?.toDouble(),
         ratePlanCode: json['rate_plan_code'] as String?,
       );
 }
+
 /// Guest profile ensured before booking (PMS CRM `GUEST` profile row).
 class GuestProfileResult {
   final String id;
@@ -827,6 +849,5 @@ class MetasearchContext {
         if (utmContent != null) 'utm_content': utmContent!,
       };
 
-  static String? _blank(String? v) =>
-      (v == null || v.isEmpty) ? null : v;
+  static String? _blank(String? v) => (v == null || v.isEmpty) ? null : v;
 }
