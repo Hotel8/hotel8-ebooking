@@ -240,7 +240,8 @@ sequenceDiagram
     APP->>BFF: POST /proxy/pms/rsv/v1/.../reservations
     BFF->>PMS: POST /v1/reservations (M2M)
     PMS->>PMS: INSERT pms.outbox (pms.reservation.created) same tx
-    PMS-->>BFF-->>APP: reservation JSON
+    PMS-->>BFF: reservation JSON
+    BFF-->>APP: reservation JSON
     PMS->>BUS: POST /v1/produce (relay, idempotency key)
     note over BUS: vertical consumers (distrib, upsell, loyalty) react
 ```
