@@ -1,4 +1,4 @@
-# DESIGN.md: Hotel8:eBooking — Detailed Design Document
+# Hotel8:eBooking — Detailed Design Document
 
 ## 1. Scope & Context
 

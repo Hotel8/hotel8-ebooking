@@ -1,4 +1,4 @@
-# BUSINESS.md: Hotel8:eBooking — Business Requirements & Functionality
+# Hotel8:eBooking — Business Requirements & Functionality
 
 > Audience: product owners, business analysts, and anyone evaluating what
 > Hotel8:eBooking **does for the business**. For architecture read `README.md`;
