@@ -1,4 +1,4 @@
-# Hotel8:eBooking — Business Requirements & Functionality
+# Hotel8:eBooking - Business Requirements & Functionality
 
 > Audience: product owners, business analysts, and anyone evaluating what
 > Hotel8:eBooking **does for the business**. For architecture read `README.md`;
@@ -13,7 +13,7 @@
 - Grow the loyalty program by letting guests join at booking time and
   instantly receive member rates.
 - Maximize booking revenue through rate-plan comparison, packages/add-ons,
-  promo and corporate codes — without leaking negotiated rates to the public.
+  promo and corporate codes - without leaking negotiated rates to the public.
 
 ## 2. Business Scope (What the Service Provides)
 
@@ -32,10 +32,10 @@
 | Promo code validation | ✅ |
 | Multi-property org landing / cross-property search | ✅ property picker when the environment hosts several; org-wide availability (`GET /v1/availability`) |
 | SEO surface (Schema.org JSON-LD, OG tags, descriptive title) | ✅ in the Flutter web shell (`web/index.html`); SSR/sitemaps ride the web-serving layer |
-| In-stay services (key, room service, chat) | ❌ delegated — Hotel8:eGuest |
-| Payment acceptance | ❌ delegated — Bill8:Payments via BFF |
-| OTA/distribution | ❌ delegated — Hotel8:Distrib |
-| Staff PMS operations | ❌ delegated — Hotel8:ePMS |
+| In-stay services (key, room service, chat) | ❌ delegated - Hotel8:eGuest |
+| Payment acceptance | ❌ delegated - Bill8:Payments via BFF |
+| OTA/distribution | ❌ delegated - Hotel8:Distrib |
+| Staff PMS operations | ❌ delegated - Hotel8:ePMS |
 
 ## 3. Business Capabilities
 
@@ -45,7 +45,7 @@
 |---|---|
 | Guest checkout | A guest without an account can complete a booking using only contact details plus a payment guarantee; the card is tokenized server-side and not charged unless the rate plan is advance-purchase. |
 | Member checkout | A signed-in member books with profile pre-fill and sees loyalty points to be earned; member-only rates apply automatically. |
-| Rate comparison | Room detail always shows the available rate plans side by side (price, cancellation, inclusions) before commitment — the guest sees the total, not just the nightly rate. |
+| Rate comparison | Room detail always shows the available rate plans side by side (price, cancellation, inclusions) before commitment - the guest sees the total, not just the nightly rate. |
 | Packages & add-ons | Add-ons (breakfast, parking, spa, transfer) are priced per stay and included in the live total. |
 | Promo code | A promo code is validated and priced against live PMS rate plans before the booking is created; invalid codes never apply silently. |
 | Cancellation | A guest can cancel their own reservation; the result honors the rate plan's cancellation policy downstream in PMS. |
@@ -67,7 +67,7 @@ it triggers produce these events **in Hotel8:PMS** (see `services/pms/DESIGN.md`
 | Booking made | `pms.reservation.created` family events |
 | Booking cancelled | `pms.reservation.cancelled` family events |
 
-**Inbound:** none — the app consumes no platform events.
+**Inbound:** none - the app consumes no platform events.
 
 ## 5. Business Rules & Invariants
 
@@ -81,7 +81,7 @@ it triggers produce these events **in Hotel8:PMS** (see `services/pms/DESIGN.md`
    affects a price.
 6. Card details are tokenized server-side; the app never sees or stores card
    data.
-7. Cancellation honors the rate plan's policy as enforced by PMS — the UI
+7. Cancellation honors the rate plan's policy as enforced by PMS - the UI
    never overrides a policy decision.
 
 ## 6. Target-User Roles & Use Cases
@@ -99,8 +99,8 @@ it triggers produce these events **in Hotel8:PMS** (see `services/pms/DESIGN.md`
 - **Direct-channel share** of total reservations (vs OTA), and metasearch
   click → booking conversion for Hotel8:Meta traffic.
 - **Loyalty enrolments** completed during booking; member-rate bookings share.
-- **Rate accuracy** — displayed rates match PMS charge at check-in (100%).
-- **Page performance** — search results render interactively well below the
+- **Rate accuracy** - displayed rates match PMS charge at check-in (100%).
+- **Page performance** - search results render interactively well below the
   three-second budget on mid-range mobile devices over 4G.
 
 ## 8. Dependencies & Reliance on Other Services
@@ -122,12 +122,12 @@ it triggers produce these events **in Hotel8:PMS** (see `services/pms/DESIGN.md`
 2. A signed-in member sees member rates and points-to-earn before committing.
 3. Room detail shows all sellable rate plans with total price and
    cancellation terms before "Book Now".
-4. An invalid promo/voucher code is rejected before the booking is created —
+4. An invalid promo/voucher code is rejected before the booking is created -
    never silently dropped at settlement.
 5. Booking confirmation displays a confirmation number and full summary.
 6. A guest can cancel an eligible booking from My Bookings and see the
    updated status.
-7. All booking traffic is confined to `/proxy/*` calls — no direct backend
+7. All booking traffic is confined to `/proxy/*` calls - no direct backend
    endpoints appear in client networking traces.
 
 ## 10. Open Business Questions
@@ -135,7 +135,7 @@ it triggers produce these events **in Hotel8:PMS** (see `services/pms/DESIGN.md`
 - Should the booking engine support full payment-at-booking (not just
   guarantee) for advance-purchase rates straight in the funnel, and under
   which settlement terms?
-- Who owns SEO/SSR — the app build or a server-rendered companion — and does
+- Who owns SEO/SSR - the app build or a server-rendered companion - and does
   Schema.org markup live in the app or the web serving layer?
 - Multi-property organizations: is one eBooking instance per property the
   norm, with the org landing page aggregating them?

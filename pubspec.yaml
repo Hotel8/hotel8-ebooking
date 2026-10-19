@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: ebooking
-description: Sentin8 Hotel8:eBooking — booking engine app for direct hotel reservations.
+description: Sentin8 Hotel8:eBooking - booking engine app for direct hotel reservations.
 publish_to: "none"
 version: 0.1.0
 

@@ -8,7 +8,7 @@
       "listing": {
         "app_name": "Hotel8:eBooking",
         "app_slug": "hotel8-ebooking",
-        "description": "Guest booking engine — search rooms by date, guest/room selectors, rate comparison, and reservation confirmation.",
+        "description": "Guest booking engine - search rooms by date, guest/room selectors, rate comparison, and reservation confirmation.",
         "backend_url": "",
         "supports_dcr": true,
         "visibility": "public",

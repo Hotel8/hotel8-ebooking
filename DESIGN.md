@@ -1,4 +1,4 @@
-# Hotel8:eBooking — Detailed Design Document
+# Hotel8:eBooking - Detailed Design Document
 
 ## 1. Scope & Context
 
@@ -102,30 +102,30 @@ graph TD
 
 Component responsibilities:
 
-- `main.dart` — entry point, instantiates the shell.
-- `app.dart` — `HbookApp` (Material theming, seed color) and `HbookShell`
+- `main.dart` - entry point, instantiates the shell.
+- `app.dart` - `HbookApp` (Material theming, seed color) and `HbookShell`
   (bottom navigation `IndexedStack`, owns the single `BffClient`, threads
   `propertyCode` into screens). Bootstrap also **parses the landing URL's
   query parameters** (metasearch deep-link context): `utm_source`,
   `utm_medium`, `utm_campaign`, `rate_plan`, and `room_type` are captured
-  into a `MetasearchContext` and flow through the funnel — the search tab
+  into a `MetasearchContext` and flow through the funnel - the search tab
   pre-fills room type/rate plan and the booking payload carries the UTM
   fields, so the confirmation attributes the stay to the ad channel
   (`Hotel8:Meta` deep-link traffic with UTM context per BUSINESS.md §8).
-- **Multi-property landing** — when the environment hosts more than one
+- **Multi-property landing** - when the environment hosts more than one
   property the funnel starts at the property-picker view of the home tab
   (`_propertiesForEnv` already reads the registry); search/results/booking
   all carry the selected property id, and the org-wide availability endpoint
   (`GET /v1/availability`) covers cross-property search.
-- `lib/screens/*.dart` — one `StatefulWidget` per funnel step; each receives
+- `lib/screens/*.dart` - one `StatefulWidget` per funnel step; each receives
   `client` (+ property context) via constructor and pushes the next step with
   `Navigator.push`.
-- `models.dart` — immutable contract classes with `fromJson`/`toJson`
+- `models.dart` - immutable contract classes with `fromJson`/`toJson`
   round-trippers.
-- `bff_client.dart` — typed wrappers over the `…/v1/…` proxy paths, one method
+- `bff_client.dart` - typed wrappers over the `…/v1/…` proxy paths, one method
   per endpoint, `BffException` for error surfacing.
 
-### Request lifecycle — availability search
+### Request lifecycle - availability search
 
 ```mermaid
 sequenceDiagram
@@ -152,7 +152,7 @@ sequenceDiagram
     end
 ```
 
-### Request lifecycle — reservation booking
+### Request lifecycle - reservation booking
 
 ```mermaid
 sequenceDiagram
@@ -177,7 +177,7 @@ sequenceDiagram
 ## 3. Data Model
 
 The app persists nothing. All state is server-side (PMS tables) or transient
-UI state. The models below are client projections of PMS contract rows —
+UI state. The models below are client projections of PMS contract rows -
 see `services/pms/DESIGN.md` §3 for the authoritative tables.
 
 ```mermaid
@@ -197,11 +197,11 @@ erDiagram
 Notes:
 
 - `Property` carries identity (`propertyCode`), locale (`timezone`,
-  `currencyCode`, languages), display address and contacts — everything the
+  `currencyCode`, languages), display address and contacts - everything the
   landing page and checkout tax/currency context needs.
 - `ReservationStatus` is the enum the UI renders through the funnel;
   the authoritative lifecycle lives on the PMS reservation row.
-- `PromoCodeResult` prices a code without committing — validation is
+- `PromoCodeResult` prices a code without committing - validation is
   read-only until the reservation is created.
 
 ## 4. API Surface
@@ -225,7 +225,7 @@ implemented in `bff_client.dart` (audience: public guest / signed-in member):
 
 ### Event flow
 
-The app is a pure client — it emits no platform events and consumes none. The
+The app is a pure client - it emits no platform events and consumes none. The
 domain events of the funnel (reservation creation, cancellation) originate in
 Hotel8:PMS; their outbox → Bus → trigger chain is specified in
 `services/pms/DESIGN.md` §4.
@@ -264,7 +264,7 @@ sequenceDiagram
   adds no audit of its own.
 - **TLS posture:** the browser/PWA runs over Sentin8:TLS-terminated origins;
   dev HTTP fallback exists only for native (`kIsWeb == false`) localhost.
-- **Upgrade drain:** stateless single-page build — upgrades of the web asset
+- **Upgrade drain:** stateless single-page build - upgrades of the web asset
   serving require no in-app drain logic.
 
 ## 6. Failure Modes & Recovery
@@ -286,7 +286,7 @@ flowchart TD
   inventory) folds a double-tap into one reservation; the UI tolerates a
   second submit.
 - **Server unreachable:** an error banner on the current step; no local
-  queueing — a booking either happens server-side now or not at all (the
+  queueing - a booking either happens server-side now or not at all (the
   funnel is short, stateless retry is cheap).
 - **Web asset upgrade:** not applicable; stateless client.
 
@@ -302,7 +302,7 @@ graph LR
 - Single Flutter isolate; all calls `async`/`await` with no concurrent fan-out
   beyond independent GETs a screen issues in parallel (`Future.wait`-style in
   screens where needed).
-- No caches — property content, rate plans and availability are re-fetched on
+- No caches - property content, rate plans and availability are re-fetched on
   entry to keep freshness (rate accuracy beats latency for a booking engine).
 - The `http.Client` is one instance for the app lifetime, closed in
   `dispose`.
@@ -315,10 +315,10 @@ graph LR
 
 1. All outbound paths begin with `/proxy/`.
 2. Non-2xx responses surface only as `BffException`.
-3. Every screen receives `client` (and property context) via constructor —
+3. Every screen receives `client` (and property context) via constructor -
    no screens construct their own client.
 4. Models are immutable and round-trip via `toJson`.
-5. The app contains no secrets, tokens, or card data — guarantee/charge data
+5. The app contains no secrets, tokens, or card data - guarantee/charge data
    handling lives server-side behind the BFF.
 
 **Insecure defaults rejected:** direct-to-service URLs from the app; token or
@@ -335,10 +335,10 @@ graph TD
     WT --> E2E[Hotel8 e2e-ts suite12_ebooking_app.spec.ts\nbrowser funnel through real BFF]
 ```
 
-- **Unit** — contract mappers own `fromJson`/`toJson` symmetry; future
+- **Unit** - contract mappers own `fromJson`/`toJson` symmetry; future
   price-arithmetic helpers would live here.
-- **Widget** — the shell renders its navigation and first screen.
-- **E2E** — `e2e-ts/tests/ui/suite12_ebooking_app.spec.ts` drives the funnel
+- **Widget** - the shell renders its navigation and first screen.
+- **E2E** - `e2e-ts/tests/ui/suite12_ebooking_app.spec.ts` drives the funnel
   as a real user through the BFF proxy (`fixtures/apiclient.ts` uses the same
   proxy paths); deliberately NOT tested: PMS internals, RLS (covered by the
   pms service test suite).
@@ -351,7 +351,7 @@ graph TD
 - Schema.org markup lives in the Flutter web shell (`web/index.html` + the
   document head set from property content); sitemap generation rides the
   App web-serving layer. Full SSR (server-rendered HTML) is a serving-layer
-  decision, not an app change — the app ships the `web/index.html` SEO
+  decision, not an app change - the app ships the `web/index.html` SEO
   surface and JSON-LD property data.
 - Runtime-context wiring (property code, branding, languages from
   `GET /v1/app/runtime/context`) is implemented; branding theming per
