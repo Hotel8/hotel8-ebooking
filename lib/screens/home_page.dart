@@ -283,7 +283,7 @@ class _Hero extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               const Text(
-                'Book your perfect stay — best rate guaranteed',
+                'Book your perfect stay - best rate guaranteed',
                 style: TextStyle(color: Colors.white70, fontSize: 14),
               ),
             ],

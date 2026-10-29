@@ -33,7 +33,7 @@ class SearchResultsPage extends StatefulWidget {
   final String? promoCode;
 
   /// Metasearch UTM attribution captured at the landing URL
-  /// (ebooking/DESIGN.md §2) — threaded to the booking payload.
+  /// (ebooking/DESIGN.md §2) - threaded to the booking payload.
   final MetasearchContext? metasearch;
 
   @override
@@ -67,7 +67,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
         roomTypes[rt.roomTypeCode] = rt;
       }
     } catch (_) {
-      // Non-fatal — show availability without enrichment.
+      // Non-fatal - show availability without enrichment.
     }
 
     for (final art in avail.roomTypes) {
@@ -249,7 +249,7 @@ class _DateGuestBar extends StatelessWidget {
           const Icon(Icons.calendar_month, size: 18),
           const SizedBox(width: 8),
           Text(
-            '${DateFormat('MMM d').format(request.arrivalDate)} — ${DateFormat('MMM d').format(request.departureDate)}',
+            '${DateFormat('MMM d').format(request.arrivalDate)} - ${DateFormat('MMM d').format(request.departureDate)}',
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(width: 8),

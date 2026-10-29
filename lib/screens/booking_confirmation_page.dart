@@ -167,7 +167,7 @@ class BookingConfirmationPage extends StatelessWidget {
                                 ?.copyWith(fontWeight: FontWeight.w600)),
                         const SizedBox(height: 4),
                         Text(
-                            'Room upgrades, spa packages, late checkout — available in the Guest App.',
+                            'Room upgrades, spa packages, late checkout - available in the Guest App.',
                             style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
@@ -202,7 +202,7 @@ class BookingConfirmationPage extends StatelessWidget {
   void _addToCalendar(BuildContext context) {
     final start = reservation.arrivalDate;
     final end = reservation.departureDate;
-    final title = '${data.propertyName} — ${data.roomTypeName}';
+    final title = '${data.propertyName} - ${data.roomTypeName}';
     // Generate a simple ICS string the user can save/open.
     final ics = StringBuffer()
       ..writeln('BEGIN:VCALENDAR')

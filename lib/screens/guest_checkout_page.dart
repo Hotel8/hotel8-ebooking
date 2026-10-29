@@ -47,9 +47,9 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
   final _arrivalTimes = <String>[
     'Flexible',
     'Before 12:00',
-    '12:00–14:00',
-    '14:00–16:00',
-    '16:00–18:00',
+    '12:00 - 14:00',
+    '14:00 - 16:00',
+    '16:00 - 18:00',
     'After 18:00',
   ];
 
@@ -81,7 +81,7 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
     }
     setState(() => _submitting = true);
     try {
-      // Tokenize card via Payments (mock — real implementation calls /proxy/payments/v1/tokens).
+      // Tokenize card via Payments (mock - real implementation calls /proxy/payments/v1/tokens).
       final token =
           'tok_${_cardNumber.text.replaceAll(' ', '').substring(0, 4)}';
 
@@ -240,7 +240,7 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
                   Expanded(
                     child: Text(
                       _isAdvancePurchase
-                          ? 'Advance purchase — your card will be charged now.'
+                          ? 'Advance purchase - your card will be charged now.'
                           : 'Your card will not be charged. Payment is due at the hotel.',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
@@ -360,7 +360,7 @@ class _GuestCheckoutPageState extends State<GuestCheckoutPage> {
 
   String? _cvvValidator(String? v) {
     if (v == null || v.trim().isEmpty) return 'Required';
-    if (v.trim().length < 3) return '3–4 digits';
+    if (v.trim().length < 3) return '3 - 4 digits';
     return null;
   }
 }
@@ -395,7 +395,7 @@ class _SummaryCard extends StatelessWidget {
                 const Icon(Icons.calendar_today, size: 16),
                 const SizedBox(width: 4),
                 Text(
-                    '${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
+                    '${DateFormat('MMM d').format(data.request.arrivalDate)} - ${DateFormat('MMM d').format(data.request.departureDate)}'),
                 const SizedBox(width: 8),
                 Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}',
                     style: Theme.of(context).textTheme.bodySmall),

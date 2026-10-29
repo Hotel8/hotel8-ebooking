@@ -208,7 +208,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                      content: Text('Date modification — coming soon')),
+                      content: Text('Date modification - coming soon')),
                 );
               },
             ),
@@ -218,7 +218,7 @@ class _MyBookingsPageState extends State<MyBookingsPage>
               onTap: () {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Guest details — coming soon')),
+                  const SnackBar(content: Text('Guest details - coming soon')),
                 );
               },
             ),
@@ -353,7 +353,7 @@ class _BookingCard extends StatelessWidget {
                 const Icon(Icons.calendar_today, size: 16),
                 const SizedBox(width: 4),
                 Text(
-                    '${DateFormat('MMM d').format(reservation.arrivalDate)} — ${DateFormat('MMM d, yyyy').format(reservation.departureDate)}'),
+                    '${DateFormat('MMM d').format(reservation.arrivalDate)} - ${DateFormat('MMM d, yyyy').format(reservation.departureDate)}'),
                 const SizedBox(width: 8),
                 Text(
                     '· ${reservation.numberOfNights} night${reservation.numberOfNights != 1 ? "s" : ""}',

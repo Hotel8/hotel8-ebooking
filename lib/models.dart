@@ -432,7 +432,7 @@ class AvailabilityResponse {
   }
 }
 
-/// Aggregate used by the search results screen — combines the PMS
+/// Aggregate used by the search results screen - combines the PMS
 /// availability room-type row with optional property/room-type content.
 class SearchResult {
   final AvailableRoomType availability;

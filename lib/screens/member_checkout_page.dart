@@ -245,7 +245,7 @@ class _MemberCheckoutPageState extends State<MemberCheckoutPage> {
             OutlinedButton.icon(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Add new card — coming soon')),
+                  const SnackBar(content: Text('Add new card - coming soon')),
                 );
               },
               icon: const Icon(Icons.add_card),
@@ -413,7 +413,7 @@ class _SummaryCard extends StatelessWidget {
                 const Icon(Icons.calendar_today, size: 16),
                 const SizedBox(width: 4),
                 Text(
-                    '${DateFormat('MMM d').format(data.request.arrivalDate)} — ${DateFormat('MMM d').format(data.request.departureDate)}'),
+                    '${DateFormat('MMM d').format(data.request.arrivalDate)} - ${DateFormat('MMM d').format(data.request.departureDate)}'),
                 const SizedBox(width: 8),
                 Text('· ${data.nights} night${data.nights != 1 ? "s" : ""}',
                     style: Theme.of(context).textTheme.bodySmall),

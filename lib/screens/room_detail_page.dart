@@ -17,7 +17,7 @@ import 'guest_checkout_page.dart';
 import 'member_checkout_page.dart';
 
 // CheckoutData is defined in ../models.dart and re-exported here for
-// convenience — the checkout & confirmation pages import it from models.
+// convenience - the checkout & confirmation pages import it from models.
 
 class RoomDetailPage extends StatefulWidget {
   const RoomDetailPage({

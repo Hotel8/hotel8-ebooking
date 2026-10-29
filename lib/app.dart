@@ -20,7 +20,7 @@ class HbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hbook — Hotel Booking',
+      title: 'Hbook - Hotel Booking',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
@@ -56,12 +56,12 @@ class _HbookShellState extends State<HbookShell> {
 
   Future<void> _bootstrap() async {
     try {
-      // Same-origin bootstrap — the TLS proxy injects the X-Sentin8-* host
+      // Same-origin bootstrap - the TLS proxy injects the X-Sentin8-* host
       // headers the runtime context resolves from (ebooking/DESIGN.md §2).
       final ctx = await fetchRuntimeContext(appBaseUrl: '');
       final client = BffClient(baseUrl: ctx.bffBaseUrl);
       // Metasearch deep-link context: rate identity + UTM attribution from
-      // the landing URL (ebooking/DESIGN.md §2 — Meta deep-link traffic).
+      // the landing URL (ebooking/DESIGN.md §2 - Meta deep-link traffic).
       final meta = MetasearchContext.fromQuery(_queryParameters());
       // The property registry read: environments hosting multiple properties
       // start the funnel at the property picker (multi-property landing,
@@ -70,7 +70,7 @@ class _HbookShellState extends State<HbookShell> {
       try {
         props = await _propertiesForEnv(client, ctx.environmentId);
       } on BffException {
-        // Landing content is optional — the funnel still works with the
+        // Landing content is optional - the funnel still works with the
         // raw property id.
       }
       setState(() {
@@ -101,7 +101,7 @@ class _HbookShellState extends State<HbookShell> {
     return out;
   }
 
-  /// `GET /proxy/hotel8-pms/v1/properties` — the property registry, filtered
+  /// `GET /proxy/hotel8-pms/v1/properties` - the property registry, filtered
   /// to the app environment (PMS list route).
   Future<List<Property>> _propertiesForEnv(
       BffClient client, String envId) async {
@@ -130,7 +130,7 @@ class _HbookShellState extends State<HbookShell> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     // Multi-property landing: no property selected yet and the environment
-    // hosts several — show the property picker instead of the funnel shell.
+    // hosts several - show the property picker instead of the funnel shell.
     if (_property == null && _properties.length > 1) {
       return _PropertyPickerPage(
         properties: _properties,
@@ -196,7 +196,7 @@ class _HbookShellState extends State<HbookShell> {
   }
 }
 
-/// The "Search" tab — a compact search form that pushes the search results
+/// The "Search" tab - a compact search form that pushes the search results
 /// page when the user taps "Search Availability".
 class _SearchTab extends StatefulWidget {
   const _SearchTab({
@@ -419,7 +419,7 @@ class _PropertyPickerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Choose your hotel — $instanceName')),
+      appBar: AppBar(title: Text('Choose your hotel - $instanceName')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -443,7 +443,7 @@ class _PropertyPickerPage extends StatelessWidget {
   }
 }
 
-/// Placeholder profile page — in production shows member info, settings,
+/// Placeholder profile page - in production shows member info, settings,
 /// sign-in / sign-out.
 class _ProfilePage extends StatelessWidget {
   const _ProfilePage();

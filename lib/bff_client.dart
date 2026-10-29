@@ -8,7 +8,7 @@
 /// Thin HTTP client that calls the BFF proxy endpoints (see
 /// `ebooking/DESIGN.md` §4) which in turn
 /// delegate to PMS / Payments / Loyalty. All requests go through the BFF
-/// server-side token guardian — Hbook never talks to a backend directly.
+/// server-side token guardian - Hbook never talks to a backend directly.
 
 import 'dart:convert';
 
@@ -45,7 +45,7 @@ class BffClient {
 
   String _path(String p) => '$_baseUrl$p';
 
-  /// Generic JSON GET — used by the bootstrap property-registry lookup.
+  /// Generic JSON GET - used by the bootstrap property-registry lookup.
   Future<Map<String, dynamic>> getRawJson(String path) async => _getJson(path);
 
   Future<Map<String, dynamic>> _getJson(String path) async {
@@ -184,7 +184,7 @@ class BffClient {
   // ═════════════════════════════════════════════════════════════════════════
 
   /// `POST /proxy/hotel8-pms/v1/properties/{propertyId}/profiles` +
-  /// `POST .../reservations` — the anonymous-guest flow ensures a profile
+  /// `POST .../reservations` - the anonymous-guest flow ensures a profile
   /// (booking-with-profile), the reservation carries it.
   Future<Reservation> createReservation(
     String propertyId,
@@ -222,7 +222,7 @@ class BffClient {
         .toList();
   }
 
-  /// `POST /proxy/hotel8-pms/v1/properties/{propertyId}/profiles` — ensure
+  /// `POST /proxy/hotel8-pms/v1/properties/{propertyId}/profiles` - ensure
   /// the booker's guest profile exists (property-scoped CRM row).
   Future<GuestProfileResult> ensureGuestProfile(
     String propertyId,
@@ -267,7 +267,7 @@ class BffClient {
     return PromoCodeResult.fromJson(json);
   }
 
-  /// `POST .../vouchers/validate` — balance + expiry check, no commitment.
+  /// `POST .../vouchers/validate` - balance + expiry check, no commitment.
   Future<VoucherResult> validateVoucher(
     String propertyId,
     String voucherNumber,
@@ -279,7 +279,7 @@ class BffClient {
     return VoucherResult.fromJson(json);
   }
 
-  /// `POST .../vouchers/redeem` — applies [amount] (partial redemption).
+  /// `POST .../vouchers/redeem` - applies [amount] (partial redemption).
   Future<VoucherResult> redeemVoucher(
     String propertyId,
     String voucherNumber,
@@ -296,10 +296,10 @@ class BffClient {
   }
 
   // ═════════════════════════════════════════════════════════════════════════
-  // Loyalty — sign up during booking (instant member-rate join)
+  // Loyalty - sign up during booking (instant member-rate join)
   // ═════════════════════════════════════════════════════════════════════════
 
-  /// `POST /proxy/hotel8-loyalty/v1/members` — one-click enrolment with the
+  /// `POST /proxy/hotel8-loyalty/v1/members` - one-click enrolment with the
   /// booking-form name/email; the response member number rides the
   /// confirmation email.
   Future<LoyaltyEnrolment> joinLoyalty(
@@ -315,7 +315,7 @@ class BffClient {
     return LoyaltyEnrolment.fromJson(json);
   }
 
-  /// `GET /proxy/hotel8-pms/v1/properties/{propertyId}/guarantee-policies` —
+  /// `GET /proxy/hotel8-pms/v1/properties/{propertyId}/guarantee-policies`  - 
   /// the checkout renders the property's guarantee terms before commitment.
   Future<List<Map<String, dynamic>>> getGuaranteePolicies(
       String propertyId) async {

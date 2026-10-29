@@ -19,23 +19,23 @@
 
 | Capability | Provided by eBooking |
 |---|---|
-| Availability search (dates, occupancy, promo code) | ✅ search funnel |
-| Room type browsing with imagery and amenities | ✅ detail pages |
-| Rate plan comparison (BAR, packages, advance purchase) | ✅ detail page table |
-| Package/add-on selection with live price total | ✅ detail + checkout |
-| Anonymous guest checkout (no account) | ✅ guest checkout |
-| Signed-in member checkout (pre-filled, points preview) | ✅ member checkout |
-| Loyalty sign-up during booking | ✅ one-click enrolment (`POST /v1/members` on hotel8-loyalty via BFF) |
-| Gift voucher redemption | ✅ validate + redeem (`POST .../vouchers/{validate,redeem}` on hotel8-pms cashiering) |
-| Booking confirmation with reference number | ✅ |
-| My Bookings: view/cancel own reservations | ✅ |
-| Promo code validation | ✅ |
-| Multi-property org landing / cross-property search | ✅ property picker when the environment hosts several; org-wide availability (`GET /v1/availability`) |
-| SEO surface (Schema.org JSON-LD, OG tags, descriptive title) | ✅ in the Flutter web shell (`web/index.html`); SSR/sitemaps ride the web-serving layer |
-| In-stay services (key, room service, chat) | ❌ delegated - Hotel8:eGuest |
-| Payment acceptance | ❌ delegated - Bill8:Payments via BFF |
-| OTA/distribution | ❌ delegated - Hotel8:Distrib |
-| Staff PMS operations | ❌ delegated - Hotel8:ePMS |
+| Availability search (dates, occupancy, promo code) |search funnel |
+| Room type browsing with imagery and amenities |detail pages |
+| Rate plan comparison (BAR, packages, advance purchase) |detail page table |
+| Package/add-on selection with live price total |detail + checkout |
+| Anonymous guest checkout (no account) |guest checkout |
+| Signed-in member checkout (pre-filled, points preview) |member checkout |
+| Loyalty sign-up during booking |one-click enrolment (`POST /v1/members` on hotel8-loyalty via BFF) |
+| Gift voucher redemption |validate + redeem (`POST .../vouchers/{validate,redeem}` on hotel8-pms cashiering) |
+| Booking confirmation with reference number ||
+| My Bookings: view/cancel own reservations ||
+| Promo code validation ||
+| Multi-property org landing / cross-property search |property picker when the environment hosts several; org-wide availability (`GET /v1/availability`) |
+| SEO surface (Schema.org JSON-LD, OG tags, descriptive title) |in the Flutter web shell (`web/index.html`); SSR/sitemaps ride the web-serving layer |
+| In-stay services (key, room service, chat) |delegated - Hotel8:eGuest |
+| Payment acceptance |delegated - Bill8:Payments via BFF |
+| OTA/distribution |delegated - Hotel8:Distrib |
+| Staff PMS operations |delegated - Hotel8:ePMS |
 
 ## 3. Business Capabilities
 
